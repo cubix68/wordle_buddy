@@ -1,0 +1,121 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    position: relative;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+.guess-box, .history {
+    margin-bottom: 20px;
+}
+
+.guess {
+    font-weight: bold;
+    font-size: 24px;
+    color: #007BFF;
+}
+
+form {
+    margin-top: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.feedback-inputs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+input[type="text"] {
+    width: 40px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 18px;
+}
+
+input[type="submit"], button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 5px;
+}
+
+input[type="submit"]:hover, button:hover {
+    background-color: #0056b3;
+}
+
+.feedback {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    margin: 0 2px;
+    line-height: 30px;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 3px;
+    font-size: 18px;
+}
+
+.green {
+    background-color: #28a745;
+    color: white;
+}
+
+.yellow {
+    background-color: #ffc107;
+    color: white;
+}
+
+.gray {
+    background-color: #6c757d;
+    color: white;
+}
+
+.history ul {
+    list-style: none;
+    padding: 0;
+}
+
+.history li {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+.logo {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    height: 120px; /* Adjust the height as needed */
+    z-index: 1; /* Ensure the logo is above other content */
+}

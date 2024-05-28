@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wordle Solver</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const inputs = document.querySelectorAll(".feedback-inputs input");
+            inputs[0].focus();
+    
+            inputs.forEach((input, index) => {
+                input.addEventListener("input", function() {
+                    if (this.value.length === 1 && index < inputs.length - 1) {
+                        inputs[index + 1].focus();
+                    }
+                });
+            });
+    
+            const newGameButton = document.getElementById("new-game-button");
+    
+    
+            newGameButton.addEventListener("click", function() {
+                form.action = "/solve";
+                form.querySelector("input[name='action']").value = "new_game";
+                form.submit();
+            });
+        });
+    </script>
+
+</head>
+<body>
+    <div class="container">
+        <img src="static/Wordle_Buddy_Lara.jpeg" alt="Wordle Buddy Logo" class="logo">
+        <h1>Congratulations!</h1>
+        {% if history %}
+            <div class="history">
+                <h2>Previous Guesses</h2>
+                <ul>
+                    {% for g, f in history %}
+                        <li>
+                            {% for i in range(5) %}
+                            <span class="feedback {{ 'green' if f[i] == 'g' else 'yellow' if f[i] == 'y' else 'gray' }}">{{ g[i].upper() }}</span>
+                            {% endfor %}
+                        </li>
+                    {% endfor %}
+                     <li>
+                    {% for i in range(5) %}
+                    <span class="feedback {{ 'green' }}">{{ winner[i].upper() }}</span>
+                    {% endfor %}
+                </li>
+                </ul>
+            </div>
+        {% endif %}
+        <form action="/" method="get">
+            <button type="submit">New Game</button>
+        </form>        
+        
+    </div>
+</body>
+
+
+
+</html>

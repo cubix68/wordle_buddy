@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wordle Solver</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const inputs = document.querySelectorAll(".feedback-inputs input");
+            inputs[0].focus();
+
+            inputs.forEach((input, index) => {
+                input.addEventListener("input", function() {
+                    if (this.value.length === 1 && index < inputs.length - 1) {
+                        inputs[index + 1].focus();
+                    }
+                });
+            });
+
+            const form = document.getElementById("feedback-form");
+            const changeButton = document.getElementById("change-button");
+            const winButton = document.getElementById("win-button");
+            const quitButton = document.getElementById("quit-button");
+            const newGameButton = document.getElementById("new-game-button");
+
+
+            changeButton.addEventListener("click", function() {
+                form.action = "/solve";
+                form.querySelector("input[name='action']").value = "change";
+                form.submit();
+            });
+
+            winButton.addEventListener("click", function() {
+                form.action = "/solve";
+                form.querySelector("input[name='action']").value = "win";
+                form.submit();
+            });
+
+            quitButton.addEventListener("click", function() {
+                form.action = "/solve";
+                form.querySelector("input[name='action']").value = "quit";
+                form.submit();
+            });
+
+            newGameButton.addEventListener("click", function() {
+                form.action = "/solve";
+                form.querySelector("input[name='action']").value = "new_game";
+                form.submit();
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <img src="/static/Wordle_Buddy.png" alt="Wordle Buddy Logo" class="logo">
+        <h1>
+            Wordle Buddy
+        </h1>
+        <div class="guess-box">
+            <p><strong>Guess:</strong> <span class="guess">{{ guess.upper() }}</span></p>
+            <form id="feedback-form" action="/solve" method="post">
+                <label for="feedback">Go ahead and try with Wordle and tell me the result:</label>
+                <label for="feedback">
+                    (<span>g</span> for <span style="color: green;">Green</span>, 
+                     <span>y</span> for <span style="color: goldenrod;">Yellow</span>, 
+                     <span>b</span> for <span style="color: gray;">Gray</span>):
+                </label>
+                                <div class="feedback-inputs">
+                    <input type="text" id="feedback0" name="feedback0" maxlength="1" required>
+                    <input type="text" id="feedback1" name="feedback1" maxlength="1" required>
+                    <input type="text" id="feedback2" name="feedback2" maxlength="1" required>
+                    <input type="text" id="feedback3" name="feedback3" maxlength="1" required>
+                    <input type="text" id="feedback4" name="feedback4" maxlength="1" required>
+                </div>
+                <input type="hidden" name="guess" value="{{ guess }}">
+                <input type="hidden" name="action" value="">
+                <br>
+                <input type="submit" value="Submit Feedback">
+                <button type="button" id="change-button">Change Guess</button>
+                <button type="button" id="win-button">Win</button>
+                <button type="button" id="quit-button">Quit</button>
+                <button type="button" id="new-game-button">New Game</button>
+                <label for="feedback">TIP: Change Guess for duplicated words. (added, sweep, alloy..etc)</label>
+
+            </form>
+        </div>
+        {% if history %}
+            <div class="history">
+                <h2>Previous Guesses</h2>
+                <ul>
+                    {% for g, f in history %}
+                        <li>
+                            {% for i in range(5) %}
+                                <span class="feedback {{ 'green' if f[i] == 'g' else 'yellow' if f[i] == 'y' else 'gray' }}">{{ g[i].upper() }}</span>
+                            {% endfor %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
