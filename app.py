@@ -76,7 +76,7 @@ def create_app():
 
             j = 0
             while (j < 5):
-                if feedback[j] == 'g':
+                if feedback[j].lower() == 'g':
                     n = 0
                     koz1=[]
                     while (n < len(words)):
@@ -85,7 +85,7 @@ def create_app():
                             harf1.append(guess[j])
                         n=n+1
                     words = koz1
-                if feedback[j] == 'y':
+                if feedback[j].lower() == 'y':
                     m = 0
                     koz2=[]
                     while (m < len(words)):
@@ -95,7 +95,7 @@ def create_app():
                             dict2[guess[j]]=j
                         m=m+1
                     words = koz2
-                if feedback[j] == "b":
+                if feedback[j].lower() == "b":
                     k=0
                     koz=[]
                     while(k < len(words)):

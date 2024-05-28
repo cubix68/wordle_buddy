@@ -53,7 +53,7 @@
 </head>
 <body>
     <div class="container">
-        <img src="static/Wordle_Buddy_Lara.jpeg" alt="Wordle Buddy Logo" class="logo">
+        <img src="static/Wordle_Buddy_Lara.png" alt="Wordle Buddy Logo" class="logo">
         <h1>
             Wordle Buddy
         </h1>
@@ -92,7 +92,7 @@
                     {% for g, f in history %}
                         <li>
                             {% for i in range(5) %}
-                                <span class="feedback {{ 'green' if f[i] == 'g' else 'yellow' if f[i] == 'y' else 'gray' }}">{{ g[i].upper() }}</span>
+                                <span class="feedback {{ 'green' if f[i].lower() == 'g' else 'yellow' if f[i].lower() == 'y' else 'gray' }}">{{ g[i].upper() }}</span>
                             {% endfor %}
                         </li>
                     {% endfor %}
