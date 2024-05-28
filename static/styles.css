@@ -116,6 +116,6 @@ input[type="submit"]:hover, button:hover {
     position: absolute;
     top: 10px;
     right: 10px;
-    height: 17%; /* Adjust the height as needed */
+    height: 15%; /* Adjust the height as needed */
     z-index: 1; /* Ensure the logo is above other content */
 }
