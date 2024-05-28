@@ -28,6 +28,12 @@ def create_app():
 
     @app.route('/')
     def index():
+        my_file = open("sgb-words.txt", "r")
+        content = my_file.read()
+        words = content.split("\n")
+        my_file.close()
+        words.sort()
+        words.pop(0)
         session.clear()
         session.pop('remaining_words', None)
         session.pop('previous_guesses', None)
@@ -40,7 +46,12 @@ def create_app():
 
     @app.route('/solve', methods=['POST'])
     def solve():
-        global words
+        my_file = open("sgb-words.txt", "r")
+        content = my_file.read()
+        words = content.split("\n")
+        my_file.close()
+        words.sort()
+        words.pop(0)
         feedback = [request.form[f'feedback{i}'] for i in range(5)]
         guess = session.get('guess')
         action = request.form.get('action')
@@ -53,20 +64,7 @@ def create_app():
             return render_template('quit.html', history=session.get('history', [])[-5:])
         elif action == 'new_game':  # New Game
             session.clear()
-            session.pop('remaining_words', None)
-            session.pop('previous_guesses', None)
-            session.pop('feedback', None)
-
-            my_file = open("sgb-words.txt", "r")
-            content = my_file.read()
-            words = content.split("\n")
-            my_file.close()
-            words.sort()
-            words.pop(0)
-            guess = random.choice(words)
-            session['guess'] = guess
-
-            return render_template('index.html', guess=guess)
+            return redirect(url_for('new_session'))
 
         
         else:
@@ -137,6 +135,13 @@ def create_app():
             guess = random.choice(words)
             session['guess'] = guess
             return render_template('index.html', guess=guess, history=session.get('history', [])[-5:])
+    
+    @app.route('/new_session')
+    def new_session():
+        session.clear()
+        return render_template('new.html')
+
+    
     return app
 
 if __name__ == '__main__':
