@@ -1,10 +1,14 @@
-from flask import Flask, render_template, request, session, redirect, url_for
+from flask import Flask, render_template, request, session, redirect, url_for, send_from_directory
 import random
 import os
 
 def create_app():
     app = Flask(__name__)
     app.secret_key = 'Cimbom68'
+
+    @app.route('/googleb1c12ef919bd4cb1.html')
+    def serve_verification_file():
+        return send_from_directory(app.root_path, 'googleb1c12ef919bd4cb1.html')
 
 
     koz1=[]
@@ -137,6 +141,8 @@ def create_app():
             guess = random.choice(words)
             session['guess'] = guess
             return render_template('index.html', guess=guess, history=session.get('history', [])[-5:])
+    
+        
     return app
 
 if __name__ == '__main__':
