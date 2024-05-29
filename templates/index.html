@@ -58,6 +58,7 @@
             Wordle Buddy
         </h1>
         <div class="guess-box">
+            <button type="button" id="new-game-button">Start the Game</button>
             <p><strong>Guess:</strong> <span class="guess">{{ guess.upper() }}</span></p>
             <form id="feedback-form" action="/solve" method="post">
                 <label for="feedback">Go ahead and try with Wordle and tell me the result:</label>
@@ -80,7 +81,6 @@
                 <button type="button" id="change-button">Change Guess</button>
                 <button type="button" id="win-button">Win</button>
                 <button type="button" id="quit-button">Quit</button>
-                <button type="button" id="new-game-button">New Game</button>
                 <label for="feedback">TIP: Change Guess for duplicated words. (added, sweep, alloy..etc)</label>
 
             </form>
