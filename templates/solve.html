@@ -4,26 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wordle Solver</title>
+    <meta name="description" content="This app generates guesses at each step with the results you provide while enjoying your favorite game: Wordle !!">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            const inputs = document.querySelectorAll(".feedback-inputs input");
-            inputs[0].focus();
+            const boxes = document.querySelectorAll(".guess-box .feedback");
 
-            inputs.forEach((input, index) => {
-                input.addEventListener("input", function() {
-                    if (this.value.length === 1 && index < inputs.length - 1) {
-                        inputs[index + 1].focus();
+            boxes.forEach((box, index) => {
+                box.addEventListener("click", function() {
+                    if (this.classList.contains('gray')) {
+                        this.classList.remove('gray');
+                        this.classList.add('yellow');
+                        updateHiddenInput(index, 'y');
+                    } else if (this.classList.contains('yellow')) {
+                        this.classList.remove('yellow');
+                        this.classList.add('green');
+                        updateHiddenInput(index, 'g');
+                    } else {
+                        this.classList.remove('green');
+                        this.classList.add('gray');
+                        updateHiddenInput(index, 'b');
                     }
                 });
             });
+
+            function updateHiddenInput(index, value) {
+                document.getElementById(`feedback${index}`).value = value;
+            }
 
             const form = document.getElementById("feedback-form");
             const changeButton = document.getElementById("change-button");
             const winButton = document.getElementById("win-button");
             const quitButton = document.getElementById("quit-button");
             const newGameButton = document.getElementById("new-game-button");
-
 
             changeButton.addEventListener("click", function() {
                 form.action = "/solve";
@@ -53,36 +66,32 @@
 </head>
 <body>
     <div class="container">
-        <img src="/static/Wordle_Buddy.png" alt="Wordle Buddy Logo" class="logo">
-        <h1>
-            Wordle Buddy
-        </h1>
+        <img src="{{ url_for('static', filename='Wordle_Buddy_Lara.png') }}" alt="Wordle Buddy Logo" class="logo">
+        <h1>Wordle</h1>
+        <h1>Buddy</h1>
         <div class="guess-box">
-            <p><strong>Guess:</strong> <span class="guess">{{ guess.upper() }}</span></p>
+            <button type="button" id="new-game-button">Start the Game</button>
+            <p><strong>MY GUESS:</strong> 
+                {% for i in range(5) %}
+                    <span class="feedback gray">{{ guess[i].upper() }}</span>
+                {% endfor %}
+            </p>
             <form id="feedback-form" action="/solve" method="post">
-                <label for="feedback">Go ahead and try with Wordle and tell me the result:</label>
-                <label for="feedback">
-                    (<span>g</span> for <span style="color: green;">Green</span>, 
-                     <span>y</span> for <span style="color: goldenrod;">Yellow</span>, 
-                     <span>b</span> for <span style="color: gray;">Gray</span>):
-                </label>
-                                <div class="feedback-inputs">
-                    <input type="text" id="feedback0" name="feedback0" maxlength="1" required>
-                    <input type="text" id="feedback1" name="feedback1" maxlength="1" required>
-                    <input type="text" id="feedback2" name="feedback2" maxlength="1" required>
-                    <input type="text" id="feedback3" name="feedback3" maxlength="1" required>
-                    <input type="text" id="feedback4" name="feedback4" maxlength="1" required>
+                <label for="feedback">Go ahead and try with Wordle and click the letters to change color</label>
+                <div class="feedback-inputs">
+                    <input type="hidden" id="feedback0" name="feedback0" value="b" required>
+                    <input type="hidden" id="feedback1" name="feedback1" value="b" required>
+                    <input type="hidden" id="feedback2" name="feedback2" value="b" required>
+                    <input type="hidden" id="feedback3" name="feedback3" value="b" required>
+                    <input type="hidden" id="feedback4" name="feedback4" value="b" required>
                 </div>
                 <input type="hidden" name="guess" value="{{ guess }}">
                 <input type="hidden" name="action" value="">
-                <br>
                 <input type="submit" value="Submit Feedback">
                 <button type="button" id="change-button">Change Guess</button>
                 <button type="button" id="win-button">Win</button>
                 <button type="button" id="quit-button">Quit</button>
-                <button type="button" id="new-game-button">New Game</button>
                 <label for="feedback">TIP: Change Guess for duplicated words. (added, sweep, alloy..etc)</label>
-
             </form>
         </div>
         {% if history %}
