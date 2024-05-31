@@ -55,6 +55,10 @@ def create_app():
 
         elif action == 'quit':  # Quit
             return render_template('quit.html', history=session.get('history', [])[-5:])
+        elif action == 'change':  # Change
+            guess = random.choice(words)
+            session['guess'] = guess
+            return render_template('index.html', history=session.get('history', []), guess=guess)
         elif action == 'new_game':  # New Game
             session.clear()
             session.pop('remaining_words', None)
