@@ -139,7 +139,7 @@ def create_app():
 
 
             if words == []:
-                return render_template('index.html', guess="No valid words found. Please check your feedback.")
+                return render_template('index.html', guess=".....")
             
         
             guess = random.choice(words)
