@@ -40,7 +40,7 @@ def create_app():
         guess = random.choice(words)
         session['guess'] = guess
 
-        return render_template('index.html', guess="will be here")
+        return render_template('index.html', guess=".....")
 
     @app.route('/solve', methods=['POST'])
     def solve():
